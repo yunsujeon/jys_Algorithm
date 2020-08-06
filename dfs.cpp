@@ -1,35 +1,26 @@
-/*너비우선탐색
-너비를 우선으로 탐색을 수행하는 탐색 알고리즘. 
-맹목적인 탐색을 하고자할때 사용할 수 있는 탐색 기법
-최단경로를 찾아준다는점에서 최단길이를 보장해야할때 사용
-큐를 이용한다.*/
-//DFS - QUEUE
+/*깊이우선탐색
+탐색을 함에 있어 보다 깊은 것을 우선적으로 탐색한다
+맹목적으로 각 노드를 탐색할때 사용
+DFS - Stack 사용*/
 
 #include <iostream>
-#include <queue>
 #include <vector>
-
+//#include <stack> 굳이 없어도 되는 이유는 컴퓨터 기본 구조가 스택구조이기때문
 using namespace std;
 
 int number = 7;
-int c[7];
+int c[8];
 vector <int> a[8];
-//입구와 출구가 다른 큐
-void bfs(int start) {
-	queue<int> q; //큐 생성
-	q.push(start); //받아온 시작위치를 넣어준다.
-	c[start] = true; //true로 초기화
-	while (!q.empty()) { //q가 빌때까지 계속한다.
-		int x = q.front(); //x는 항상 출구쪽의 수로 초기화
-		q.pop(); //출구로 하나 내보낸다.
-		printf("%d", x); //프린트한다
-		for (int i = 0; i < a[x].size(); i++) { //연결된 수만큼반복
-			int y = a[x][i]; //연결된 노드가 가리키는 수를 저장
-			if (!c[y]) { //있다면은
-				q.push(y); //큐에 그 수를 넣는다.
-				c[y] = true;
-			}
-		}
+
+void dfs(int x) {
+	//cout << c[x]; //방문체크여부
+	if (c[x])  //방문체크가 되었다면 뛰어넘기
+		return;
+	c[x] = true; //방문체크하기
+	cout << x << ' ';
+	for (int i = 0; i < a[x].size(); i++) {
+		int y = a[x][i];
+		dfs(y);
 	}
 }
 int main() {
@@ -60,6 +51,6 @@ int main() {
 	a[6].push_back(7);
 	a[7].push_back(6);
 
-	bfs(1);
+	dfs(1);
 	return 0;
 }
