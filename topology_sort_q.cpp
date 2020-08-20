@@ -76,6 +76,7 @@ int main() {
 //모든 정점이 수행될수있는 최소시간을 출력하는 것이므로 단순히 임계경로를 출력하면된다
 //간선이 연결되는 순간을 기준으로 현재보다 더 오래걸린다면 계속하여 갱신하는 방식으로..
 
+/*
 #include <vector>
 #include <iostream>
 #include <queue>
@@ -122,5 +123,96 @@ int main(void) {
     }
     topologySort();
 }
+*/
 
+//1948 임계경로
+/* 모든 도로가 일방통행. 지도를 그리기 위해서 시작 도시로부터 도착 도시까지 모든 경로를 탐색
+도착도시에서 마지막에 모두 모인다. 이들이 만나는 시간은 출발도시로부터 출발한 후 몇시간 후? = 젤 마지막 사람 도착시간
+어떤사람은 이 시간에 만나기 위해 1분도 쉬지않고 달려야된다. 이 사람들이 지나는 도로의 수 카운트
+입력 ex)
+7       도시의 개수
+9       도로의 개수
+1 2 4   도로의 출발도시:1 / 도로의 도착도시:2 / 도로를 지나는데 걸리는 시간:4
+1 3 2   출발도시:1 / 도착도시:3 / 시간:2
+....
+출력 ex)
+12      만나는 시간
+5       1분도 쉬지않고 달려야 하는 도로의 수
+*/
+//모든 임계경로를 구하려면 역추적해야된다.
 
+#include <iostream>
+#include <queue>
+#include <vector>
+#define MAX 10001
+
+using namespace std;
+
+class Edge {
+public:
+    int node;
+    int time;
+    Edge(int node, int time) { //생성자로 초기화
+        this->node = node;
+        this->time = time;
+    }
+};
+
+int n, start, finish;
+int inDegree[MAX], result[MAX], c[MAX];
+vector<Edge> a[MAX];
+vector<Edge> b[MAX];
+
+void topologySort() {
+    queue<int> q;
+    q.push(start); //처음 있는거를 큐에 넣는다. (진입차수0이라그랬음)
+    while (!q.empty()) { //큐가 빌때까지 계속한다.
+        int x = q.front(); //큐의 맨앞에있는게 x
+        q.pop();
+        for (int i = 0; i < a[x].size(); i++) { //인접노드를 번갈아가며
+            Edge y = Edge(a[x][i].node, a[x][i].time); //y에는 노드뿐 아니라 시간도 같이저장
+            if (result[y.node] <= y.time + result[x]) { //시간이 time을 더한것보다 작으면
+                result[y.node] = y.time + result[x]; //더 큰값으로 갱신해준다.
+            }
+            if (--inDegree[y.node] == 0) //새롭게 진입차수가 0이 된것이 있다면
+                q.push(y.node); //큐에 삽입해준다.
+        }
+    }
+    //결과를 역추적한다.
+
+    int count = 0;
+    q.push(finish); //끝에있는걸 큐에 넣는다.
+    while (!q.empty()) { //큐가빌때까지 반복
+        int y = q.front();
+        q.pop(); //꺼내준다
+        for (int i = 0; i < b[y].size(); i++) { //노드의 갯수만큼 반복
+            Edge x = Edge(b[y][i].node, b[y][i].time); 
+            //도착점에 연결되어있는 시작점을 하나씩 확인하면서 최장경로인지 확인
+            if (result[y] - result[x.node] == x.time) {
+                count++; //최장경로의 갯수 += 1
+                //큐에는 한 번씩만 담아 추적한다.
+;                if (c[x.node] == 0) {
+                    q.push(x.node);
+                    c[x.node] = 1;
+                }
+            }
+        }
+    }
+    printf("%d\n%d", result[finish], count);
+}
+
+int main() {
+    int m;
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        int x, node, time;
+        cin >> x >> node >> time;
+        a[x].push_back(Edge(node, time));
+        b[node].push_back(Edge(x, time));
+        inDegree[node]++;
+    }
+    //1 7 이면 7로가는 경로를 찾는데, 가장 오래걸리는 시간을 찾아야된다.
+    //가장 오래걸리는 시간을 찾고 그를 지나는 노드들이 바로 쉬지않고 달려야되는 도로의 수이다.
+    cin >> start >> finish; 
+    topologySort();
+}
