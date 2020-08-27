@@ -106,6 +106,7 @@ int main() {
 2 3		관계 2 -> 2번 블록이 넘어지면 3번 블록도 넘어진다.
 출력) 1*/
 
+/*
 #include <iostream>
 #include <stack>
 #include <vector>
@@ -189,6 +190,139 @@ int main() {
 				result++; //갯수 증가시킨다.
 		}
 		printf("%d\n", result);
+	}
+	return 0;
+}
+*/
+
+/*3977번 축구전술
+경기장을 여러구역으로 나누고 어떤 선수가 A->B로 움직이는것을 알려줌
+선수들은 시작구역을 찾지못한다. 시작구역을 찾아줘야한다.
+입력)
+2		테스트 케이스의 개수 2개
+4 4		구역의 수 4개 움직임의 수 4번
+0 1		0에서 1로 움직임
+1 2		1에서 2로 움직임
+2 0		2에서 0으로 움직임
+2 3		2에서 3으로 움직임
+
+4 4
+0 3
+1 0
+2 0
+2 3
+출력) 각 테스트케이스마다 모든 시작구역을 오름차순으로 한줄에 하나씩 출력
+시작구역이 없으면 Confused 출력
+0		//첫번째 테스트케이스는 시작구역이 0 1 2
+1
+2
+
+Confused //두번째 테스트케이스는 시작구역이 없다.
+하나의 SCC에서 출발하여 모든 그래프를 방문할 수 있을때에 한해 출발 SCC의
+모든 원소를 출력하는 문제이다.
+출발 SCC를 찾으려면 진입차수가 0인 SCC를 찾으면 된다.
+진입차수가 0인 SCC가 여러개이거나 존재하지 않는경우 Confused이다. */
+
+#include <iostream>
+#include <stack>
+#include <vector>
+#include <algorithm>
+#define MAX 100001
+
+using namespace std;
+
+stack<int> s;
+int n, m;
+int id, d[MAX];
+bool finished[MAX];
+vector<int> a[MAX];
+vector<vector<int>> SCC;
+vector<int> result; //추가
+int group[MAX];
+bool inDegree[MAX];
+
+//항상 처음 방문하는 노드만 실행된다. N번실행
+int dfs(int x) {
+	d[x] = ++id;
+	s.push(x);
+	int parent = d[x];
+	for (int i = 0; i < a[x].size(); i++) {
+		int y = a[x][i];
+		if (d[y] == 0)
+			parent = min(parent, dfs(y));
+		else if (!finished[y])
+			parent = min(parent, d[y]);
+	}
+	//부모노드가 자기 자신일 경우 SCC를 형성한다.
+	if (parent == d[x]) {
+		vector<int> scc;
+		while (1) {
+			int t = s.top();
+			s.pop();
+			scc.push_back(t);
+			group[t] = SCC.size() + 1; //group을 이용하여 특정한 SCC에 대한 진입차수를 구하도록 만듦
+			finished[t] = true;
+			if (t == x)
+				break;
+		}
+		SCC.push_back(scc);
+	}
+	//자신의 부모 값을 반환한다.
+	return parent;
+}
+
+int main() {
+	int t;
+	scanf_s("%d", &t);
+	while (t--) {
+		SCC.clear();
+		fill(d, d + MAX, 0);
+		fill(finished, finished + MAX, 0);
+		fill(inDegree, inDegree + MAX, false);
+		result.clear(); //테스트케이스가 여러개일 수 있기때문에 클리어
+		scanf_s("%d %d", & n, &m);
+		for (int i = 1; i <= n; i++) {
+			a[i].clear();
+		}
+		for (int i = 0; i < m; i++) {
+			int x, y;
+			scanf_s("%d %d", &x, &y);
+			a[x + 1].push_back(y + 1); //각 정점이 1부터 시작하도록 만들어야되기때문에 +1
+		}
+		for (int i = 1; i <= n; i++) {
+			if (d[i] == 0)
+				dfs(i);
+		}
+		for (int i = 1; i <= n; i++) { //진입차수를 구해준다.
+			//모든 정점을 다 확인하면서 다른 그룹으로 넘어가는 구간에 대해서
+			//진입차수를 확인한다.
+			for (int j = 0; j < a[i].size(); j++) {
+				int y = a[i][j];
+				if (group[i] != group[y]) {
+					inDegree[group[y]] = true;
+				}
+			}
+		}
+		int count = 0;
+		//정답 도출부분
+		for (int i = 0; i < SCC.size(); i++) { //강한결합요소 다 확인하도록
+			if (!inDegree[i + 1]) { //특정한 SCC에 진입차수가 없는경우
+				count++; //센다
+				for (int j = 0; j < SCC[i].size(); j++) { //그때에 한해서 해당원소를 다 담아준다.
+					result.push_back(SCC[i][j] - 1); //result에 담아즌다
+				}
+			}
+		}
+		sort(result.begin(), result.end()); //오름차순으로
+		if (count != 1) {
+			printf("Confused\n\n");
+		}
+		else {
+			for (int i = 0; i < result.size(); i++) {
+				printf("%d\n", result[i]);
+			}
+			printf("\n");
+		}
 	}
 	return 0;
 }
