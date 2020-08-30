@@ -129,6 +129,7 @@ int main() {
 키가 4인 사람의 왼쪽에는 자기보다 키큰사람이 없다.
 */
 
+/*
 #include <iostream>
 
 using namespace std;
@@ -154,6 +155,136 @@ int main() {
 	for (int i = 1; i <= n; i++) {
 		printf("%d ", d[i]);
 		//줄을 선 순서대로 키를 출력한다.
+	}
+	return 0;
+}
+*/
+
+/* 1541
+잃어버린 괄호
+양수와 + - 괄호를 가지고 길이가 최대 50인 식을 만들고 괄호를 모두 지웠다.
+이후 괄호를 적절히 쳐서 이 식의 값을 최소로 만들려고 한다.
+입력)
+55-50+40
+출력)
+-35
+마이너스뒤부터는 괄호연다(마이너스로더한다) 다시 마이너스가 나오면그 앞에서닫아준다.
+*/
+/*
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+string a;
+
+int main() {
+	cin >> a;
+	int result = 0;
+	string temp = "";
+	bool minus = false;
+
+	for (int i = 0; i <= a.size(); i++) {
+		//숫자를 먼저 만들고 그 숫자의 부호를 나중에 만들어서 더하거나 빼준다.
+		cout << a[i];
+		if (a[i] == '+' || a[i] == '-' || a[i] == '\0') { //부호가있을때만 걸린다.
+			if (minus == true) //마이너스가 한번 true로 셋되면 계속 마이너스로 더한다
+				result += -stoi(temp); //문자열을 숫자로 변환하는 함수 atoi도 쓸수있음
+			else
+				result += stoi(temp);
+			temp = ""; //temp를 비워준다.
+			if (a[i] == '-')
+				minus = true;
+			continue;
+		}
+		temp += a[i];
+	}
+	printf("%d", result);
+	return 0;
+}
+*/
+
+/*10610번
+양수 n에 포함된 숫자들을 섞어 30의 배수가 되는 가장 큰 수를 만들고 싶어한다.
+n은 최대 10^5개의 숫자로 구성되어있다.
+입력)
+102
+출력) - 1, 0, 2 로 만들수 있는 30의 최대 배수
+210
+정수론의 기초개념 : 각 숫자 자릿수의 합이 3의 배수라면 전체 숫자는 항상 3의 배수가 된다.
+각 자리수 합이 3이 되는지 확인하고 0이 있어야 30의 배수가 될것이다.
+큰숫자대로 출력하면될것
+*/
+/*
+#include <iostream>
+using namespace std;
+int number[10];
+int main() {
+	string a; 
+	cin >> a; //숫자입력받는다.
+	int temp = 0;
+	for (int i = 0; i < a.size(); i++) { //string 크기만큼
+		number[a[i] - '0']++; //0~9 배열에 그 숫자가 있으면 ++해준다.
+		temp = temp + (a[i] - '0'); //3의 배수인지 판별하기 위해 더해준다.
+	}
+	if (temp % 3 == 0 && number[0] != 0) { //3의 배수이고 0이 있을 경우에
+		for (int i = 9; i >= 0; i--) {
+			for (int j = 0; j < number[i]; j++) {
+				cout << i;
+			}
+		}
+	}
+	else {
+		cout << -1;
+	}
+	return 0;
+}
+*/
+
+/*신입사원
+서류심사와 면접시험 성적 중 적어도 하나가 다른 지원자보다 떨어지지 않는자만 선발한다는 원칙
+신규채용에서 선발할 수 있는 신입사원의 최대인원수는?
+입력)
+2		2개의 테스트케이스
+5		첫번째 테스트케이스의 지원자의 수
+3 2		1번지원자의 서류심사성적, 면접 성적
+1 4		2번...
+4 1
+2 3
+5 5
+7		두번째 테스트케이스의 지원자의 수
+3 6		1번 지원자의 서류심사성적, 면접 성적
+7 3
+....
+*/
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+vector<pair<int, int> > v;
+
+int main() {
+	int a, b, c, d;
+	cin >> a; //테스트케이스
+	for (int i = 0; i < a; i++) {
+		v.clear(); //사용한 vector 배열을 다 지워준다.
+		int min = 100001, result = 0;
+		cin >> b;
+		for (int j = 0; j < b; j++) {//테스트케이스의 사람수
+			cin >> c >> d;//서류심사성적, 면접성적
+			v.push_back(make_pair(c, d));
+		}
+		sort(v.begin(), v.end()); //오름차순으로 정렬한다. first 원소를 기준으로 정렬
+		for (int i = 0; i < b; i++) { //사람 수만큼 반복하면서 min값을 갱신한다.
+			//여기서 이미 first조건은 순위대로 정렬되어 있으므로 여기서 min을 갱신해야만 붙을것이다.
+			//갱신하지 못한다면 first 순위도 밀리고 second 순위도 밀리는것.
+			if (min > v[i].second) {
+				min = v[i].second;
+				result++;
+			}
+		}
+		printf("%d", result);
 	}
 	return 0;
 }
