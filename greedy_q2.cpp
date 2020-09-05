@@ -111,6 +111,9 @@ int main() {
 	}
 	for (int j = 0; j < m; j++) { //문자열 길이만큼 반복한다.
 		sort(a, a + n); //A있는게 앞으로 오게정렬
+		//이거때문에 헷갈렸었음
+		//AGCGA
+		//TGAGT 이렇게 있으면 A와 T를 sort 하고 다음번 for문에서는 G와 G 그 다음번에선 C와 A를 sort 한다.
 		int i = 0, counts[4] = { 0, };
 		while (i < n && a[i][j] == 'A') { //정렬한것에서 A를 다뽑아낸다. j를 두고 i만 늘려나간다.
 			counts[0]++; i++;
