@@ -92,7 +92,7 @@ TAAGATAC	해밍거리의 합이 가장 작은 DNA를 출력
 7	해밍거리의 합
 따라서 모든 문자열을 순서대로 읽으면서 가장 많이 등장한 문자들을 결과문자열에 저장하면 된다.
 */
-
+/*
 #include <iostream>
 #include <algorithm>
 #define MAX 1001
@@ -151,6 +151,28 @@ int main() {
 	cout << res << '\n' << cnt << '\n';
 	return 0;
 }
+*/
 
-//AGCGA
-//TGAGT
+/*2812
+크게만들기
+N자리 숫자가 주어졌을때 여기서 숫자 K개를 지워서 얻을수있는 가장 큰 수를 구하는
+프로그램을 작성하시오
+입력)
+4 2		N K
+1924	N자리숫자
+출력)
+94
+단순히 앞에서부터 숫자를 읽어가며 스택에 넣으면 된다. 다만 새롭게 등장한 뒤에 있는
+숫자보다 작은숫자들을 모두 스택에서 빼서 스택에는 오직 큰 숫자들만 넣어주면된다.
+스택에 다 넣은 뒤에도 지워야 하는 숫자가 남아있는 경우, 이미 내림차순이 된 것이므로
+뒤에서부터 뽑으면 된다.
+*/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int n, k;
+string a;
+vector<char> result;
+
