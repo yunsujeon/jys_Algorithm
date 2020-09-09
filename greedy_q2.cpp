@@ -167,6 +167,7 @@ N자리 숫자가 주어졌을때 여기서 숫자 K개를 지워서 얻을수�
 스택에 다 넣은 뒤에도 지워야 하는 숫자가 남아있는 경우, 이미 내림차순이 된 것이므로
 뒤에서부터 뽑으면 된다.
 */
+//주의사항!!!!! 지우기만하고 문자열을 섞을수는 없다!!!!!!!!!!!!! 이거때매 한참고민함
 #include <iostream>
 #include <vector>
 
@@ -175,4 +176,23 @@ using namespace std;
 int n, k;
 string a;
 vector<char> result;
+
+int main() {
+	cin >> n >> k >> a; // N자리 숫자, K개를 지우는 것 a숫자
+	int i = 0;
+	while (i != a.size()) {
+		while (k != 0 && !result.empty() && result.back() < a[i]) {
+			result.pop_back(); //들어간 값이 있던값보다 작으면 있던값을 result에서 꺼낸다.
+			k--; //k개만 지우면 되므로 -> 근데 이게 어떻게 젤 작은 숫자만 지운거라고 보장하지?
+		}
+		result.push_back(a[i]); //result에 넣는다.
+		i++;
+	}
+	while (k--) {
+		result.pop_back(); //pop_back으로 꺼내지않고 담겨있는 그대로 0부터 출력한거
+	}
+	for (int i = 0; i < result.size(); i++) {
+		cout << result[i];
+	}
+}
 
