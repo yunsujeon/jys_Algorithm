@@ -86,7 +86,7 @@ int main() {
 8 = 3 + 5
 20 = 3 + 17
 */
-
+/*
 #include <iostream>
 #define MAX 1000001
 using namespace std;
@@ -122,3 +122,9 @@ int main() {
 	}
 	return 0;
 }
+*/
+
+/*4673번 셀프넘버
+
+
+*/
