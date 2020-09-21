@@ -125,6 +125,50 @@ int main() {
 */
 
 /*4673번 셀프넘버
-
-
+d(n)은 n과 n 자리수를 더하는 함수 d(75)=75+7+5 = 87이다
+양의정수 33으로 시작했을때 33+3+3 = 39 / 39+3+9=51.. 등으로 무한수열 만들수있다.
+n은 d(n)의 생성자라고 부른다. 위에서 33은 39의 생성자이다.
+생성자가 한개 이상인 경우도 있다. 101의 생성자는 91과 100
+여기서 생성자가 없는 숫자를 셀프넘버 라고 한다.
+100보다 작은 셀프넘버는 13개이다. 1 3 5 7 9 20 31 42 53 64 75 86 97
+10000보다 작거나 같은 셀프넘버를 한줄에 하나씩 출력하는 프로그램을 작성하시오
+-> 에라토스테네스의 체 알고리즘을 조금 변경하면 풀수있다.
+특정한 숫자의 생성자를 구하면 그 숫자의 생성자를 언제 구하든지 항상 동일한 값이
+나온다는 특징을 이용한 것.
 */
+
+#include <iostream>
+#define MAX 10001
+
+using namespace std;
+
+int a[MAX];
+int d[MAX];
+
+
+int getNext(int x) {
+	int sum = x, temp = x, cipher = 1;
+	while (temp >= 10) {
+		cipher++;
+		temp /= 10;
+	}
+	for (int i = 0; i < cipher; i++) {
+		sum += x % 10; //x를 10으로 나눈 나머지를 더한다.
+		x /= 10; //x는 x를 10으로 나눈 몫.
+	}
+	return sum;
+}
+
+int main() {
+	for (int i = 1; i < MAX; i++) {
+		for (int j = getNext(i); j < MAX; j = getNext(j)) {
+			if (a[j] == 1)continue;
+			else a[j] = 1;
+		}
+	}
+	for (int i = 1; i < MAX; i++) {
+		if (a[i] == 0)
+			cout << i << '\n';
+	}
+	return 0;
+}
