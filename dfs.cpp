@@ -8,7 +8,6 @@ DFS - Stack 사용*/
 //#include <stack> 굳이 없어도 되는 이유는 컴퓨터 기본 구조가 스택구조이기때문
 using namespace std;
 
-int number = 7;
 int c[8];
 vector <int> a[8];
 
@@ -20,7 +19,7 @@ void dfs(int x) {
 	cout << x << ' ';
 	for (int i = 0; i < a[x].size(); i++) {
 		int y = a[x][i];
-		dfs(y);
+		dfs(y); //재귀
 	}
 }
 int main() {
