@@ -33,11 +33,12 @@ void bfs(int start) {
 	}
 }
 int main() {
-	a[1].push_back(2);
-	a[2].push_back(1);
 
 	a[1].push_back(3);
 	a[3].push_back(1);
+
+	a[1].push_back(2);
+	a[2].push_back(1);
 
 	a[2].push_back(3);
 	a[3].push_back(2);
