@@ -2,7 +2,7 @@
 //BP = 브루트 포스 = 완전탐색
 
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 using namespace std;
 
 int broken[10];
