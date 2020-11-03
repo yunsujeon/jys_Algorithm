@@ -1,6 +1,6 @@
-//¿ÏÀüÅ½»ö
-//ÀÌµ¿ °¡´ÉÇÑ °æ¿ìÀÇ ¼ö : X-1, X+1, 2*X
-// BFSÀÌ¿ëÇÑ´Ù. BFSÀÇ ´Ù¸¥ ¾²ÀÓ
+//ì™„ì „íƒìƒ‰
+//ì´ë™ ê°€ëŠ¥í•œ ê²½ìš°ì˜ ìˆ˜ : X-1, X+1, 2*X 
+// BFSì´ìš©í•œë‹¤. BFSì˜ ë‹¤ë¥¸ ì“°ìž„
 #include <iostream>
 #include <queue>
 
@@ -9,29 +9,29 @@ using namespace std;
 int N, K, visited[100001] = { 0, };
 queue<int> q;
 
-//±âº»¿ø¸® : °¢ visited¿¡ ¹æ¹®È½¼ö¸¦ ÀÔ·ÂÇÔÀ¸·Î½á ¼ýÀÚ x°¡ µµ´ÞÇÏ·Á¸é
-//¸î¹ø °¡¾ßµÇ´ÂÁö¸¦ visited¿¡ ´Ù ÀúÀåÇØµÎ´Â°Í
+//ê¸°ë³¸ì›ë¦¬ : ê° visitedì— ë°©ë¬¸íšŸìˆ˜ë¥¼ ìž…ë ¥í•¨ìœ¼ë¡œì¨ ìˆ«ìž xê°€ ë„ë‹¬í•˜ë ¤ë©´
+//ëª‡ë²ˆ ê°€ì•¼ë˜ëŠ”ì§€ë¥¼ visitedì— ë‹¤ ì €ìž¥í•´ë‘ëŠ”ê²ƒ
 int bfs() {
 	q.push(N);
 	visited[N] = 1;
 	while (!q.empty()) {
 		int p = q.front();
 		q.pop();
-		//À§Ä¡¿¡ µµ´ÞÇß´Ù¸é Ãâ·Â
+		//ìœ„ì¹˜ì— ë„ë‹¬í–ˆë‹¤ë©´ ì¶œë ¥
 		if (p == K) 
 			return visited[p] - 1;
-		//¼öºóÀÌ ÇöÀçÀ§Ä¡-1 ÇÑ °ªÀÌ 0º¸´Ù Å©°Å³ª °°°í ¹æ¹®ÇÑ ÀûÀÌ¾øÀ»°æ¿ì
-		//ÇöÀç °ª¿¡¼­ ·¹º§À»(À§Ä¡¸¦) 1 Áõ°¡½ÃÄÑ Å¥¿¡ ³Ö¾îÁØ´Ù.
+		//ìˆ˜ë¹ˆì´ í˜„ìž¬ìœ„ì¹˜-1 í•œ ê°’ì´ 0ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ê³  ë°©ë¬¸í•œ ì ì´ì—†ì„ê²½ìš°
+		//í˜„ìž¬ ê°’ì—ì„œ ë ˆë²¨ì„(ìœ„ì¹˜ë¥¼) 1 ì¦ê°€ì‹œì¼œ íì— ë„£ì–´ì¤€ë‹¤.
 		if (p - 1 >= 0 && visited[p - 1] == 0) {
-			visited[p - 1] = visited[p] + 1; //ÇöÀç p°¡ 1ÀÌ¶ó¸é 2¸¦ ³Ö¾îÁÖ´Â°Í 
-			q.push(p - 1); //p-1°ªÀ» push ÇØÁØ´Ù
+			visited[p - 1] = visited[p] + 1; //í˜„ìž¬ pê°€ 1ì´ë¼ë©´ 2ë¥¼ ë„£ì–´ì£¼ëŠ”ê²ƒ 
+			q.push(p - 1); //p-1ê°’ì„ push í•´ì¤€ë‹¤
 		}
-		//¼öºóÀÌ ÇöÀç À§Ä¡ÀÇ +1ÀÌ 100000º¸´Ù ÀÛ°Å³ª °°°í ¹æ¹®ÇÑ ÀûÀÌ ¾øÀ»°æ¿ì
+		//ìˆ˜ë¹ˆì´ í˜„ìž¬ ìœ„ì¹˜ì˜ +1ì´ 100000ë³´ë‹¤ ìž‘ê±°ë‚˜ ê°™ê³  ë°©ë¬¸í•œ ì ì´ ì—†ì„ê²½ìš°
 		if (p + 1 <= 100000 && visited[p + 1] == 0) {
 			visited[p + 1] = visited[p] + 1;
 			q.push(p + 1);
 		}
-		//¼öºóÀÌ ÇöÀç À§Ä¡ÀÇ 2¹è°¡ 0º¸´Ù Å©°Å³ª °°°í, ¹æ¹®ÇÑÀûÀÌ ¾øÀ»°æ¿ì
+		//ìˆ˜ë¹ˆì´ í˜„ìž¬ ìœ„ì¹˜ì˜ 2ë°°ê°€ 0ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ê³ , ë°©ë¬¸í•œì ì´ ì—†ì„ê²½ìš°
 		if (2 * p <= 100000 && visited[2 * p] == 0) {
 			visited[2 * p] = visited[p] + 1;
 			q.push(2 * p);
