@@ -13,7 +13,6 @@
 #define MAX 10000
 using namespace std;
 
-
 int a[MAX];
 int prime[MAX];
 int start, destination;
