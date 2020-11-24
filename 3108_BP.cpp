@@ -4,6 +4,7 @@
 // 500을 더하고 2를 곱해준다. (모눈종이처럼 색을칠하기위해)
 //이 후 직사각형의 각 점을 하나씩 방문했다는 값으로 변경해준다.
 //주의 : 맨 처음시작할때 0,0에서 펜 내렸으므로 1000,1000방문했다면 1빼주자
+
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -15,6 +16,8 @@ int MAP[MAX][MAX]; //이게 마이너스값이 들어갈수없기때문에
 bool visit[MAX][MAX];
 int dx[] = { 0,0,1,-1 };
 int dy[] = { 1,-1,0,0 };
+
+//main과 solution 또는 dfs와 solution을 합친 코드를 만들면?
 
 void dfs(int y, int x) {
 	if (y < 0 || x < 0 || x >= MAX || y >= MAX) //범위가아니면
