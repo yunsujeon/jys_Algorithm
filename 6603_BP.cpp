@@ -1,23 +1,40 @@
-//²À 6°³ÀÇ ¼ıÀÚ¸¦ °ñ¶ó¾ßÇÑ´Ù. ÁÖ¾îÁø ¼ö Áß¿¡¼­.
+//ê¼­ 6ê°œì˜ ìˆ«ìë¥¼ ê³¨ë¼ì•¼í•œë‹¤. ì£¼ì–´ì§„ ìˆ˜ ì¤‘ì—ì„œ.
 
-#define MAX 49
+#define MAX 6
 #include <iostream>
 #include <string.h>
 
 using namespace std;
 
+int k, input[13];
+int result[MAX];
+
+void print(int a, int b) { //ì¬ê·€ë¥¼ ì´ìš©í•œ ì™„ì „íƒìƒ‰ìœ¼ë¡œ í•´ê²°
+	if (b == MAX) { //6ê°œ ë§Œë“¤ë©´ ì¶œë ¥í•˜ê³  íƒˆì¶œ
+		for (int i = 0; i < MAX; i++) {
+			cout << result[i] << " ";
+		}
+		cout << endl;
+		return;
+	}
+	for (int i = a; i < k; i++) {
+		result[b] = input[i];
+		print(i + 1, b + 1);
+	}
+}
+
 int main() {
-	int k, input[MAX];
 	cin >> k;
 	while (k != 0) {
 		for (int i = 0; i < k; i++) {
-			cin >> input[i];
+			cin >> input[i]; //6~13 ì…ë ¥ê°€ëŠ¥
 		}
-		//next permutation À¸·Î ¸ğµç ¼ø¿­ ±¸ÇØº¸±â?
-		//¿À¸§Â÷¼øÀ¸·Î ÀÔ·ÂÀÌ µÅÀÖ±äÇÏ´Ù.
 
+		print(0, 0);
+		cout << endl;
 
 		memset(input, 0, sizeof(input));
+		memset(result, 0, sizeof(result));
 		cin >> k;
 	}
 	return 0;
