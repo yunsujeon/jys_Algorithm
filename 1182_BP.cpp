@@ -1,4 +1,4 @@
-
+//부분수열구하기
 #include <iostream>
 
 using namespace std;
@@ -20,7 +20,6 @@ void hap(int a, int b) {
 	//두갈래길로 나뉘게된다.
 	hap(a + 1, b - arr[a]); //안더해주고 다음 인덱스로넘어가기
 	hap(a + 1, b); //더해주고 다음인덱스로 넘어가기
-
 }
 
 int main() {
