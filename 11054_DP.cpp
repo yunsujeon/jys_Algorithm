@@ -13,7 +13,6 @@ int val=0;
 
 void solution() {
 	//따로따로 구해야될것이다. 증가부와 감소부 1053번 참고
-	
 	leftdp[0] = 1;
 	for (int i = 1; i < N; i++) {
 		leftdp[i] = 1;
