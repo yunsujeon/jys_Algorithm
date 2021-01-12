@@ -1,4 +1,4 @@
-//°ÝÀÚÀÇ ¹ÛÀ¸·Î ³ª°£ ¸ð·¡ÀÇ ¾çÀ» Ãâ·ÂÇÑ´Ù.
+//ê²©ìžì˜ ë°–ìœ¼ë¡œ ë‚˜ê°„ ëª¨ëž˜ì˜ ì–‘ì„ ì¶œë ¥í•œë‹¤.
 
 #include <iostream>
 
@@ -13,36 +13,39 @@ int go;
 
 void move(int dir,int r,int c) { 
 
-	if ((dir == 1)&& (c>2)) { //ÁÂ·ÎÀÌµ¿
+	if ((dir == 1)&& (c>2)) { //ì¢Œë¡œì´ë™
 		cnt++;
 		for (int i = 0; i < cnt; i++) {
-			if (r == 2 && c == 2) //³¡¿¡ ´Ù´Ù¸£¸é return ÇÑ´Ù. 0,1Àº ºó ½ºÆäÀÌ½º·Î ³ªµÒ
+			if (r == 2 && c == 2) //ëì— ë‹¤ë‹¤ë¥´ë©´ return í•œë‹¤. 0,1ì€ ë¹ˆ ìŠ¤íŽ˜ì´ìŠ¤ë¡œ ë‚˜ë‘ 
 				return;
-			int y = map[r][c - 1]; //yÁöÁ¡Àº 0ÀÌµÇ°í ÀÌ ÁöÁ¡¿¡ÀÖ´Â
-			int re = y / 100;
+			int y = map[r][c - 1];
+			float re = y / 100.0;
+			int a = y - int(re * 5) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2) - int(re * 1) - int(re * 7) -int( re * 10) - int(re * 2);
 			map[r][c - 1] = 0;
-			map[r][c - 2] = map[r][c - 2] + re * 55; //a ´Â 55%°¡ ¾Æ´Ï´Ù.. ³²Àº ¸ð·¡ ÀüºÎ ´ÙÀÌ´Ù..!!!!!!
-			map[r][c - 3] = map[r][c - 3] + re * 5;
-			map[r - 1][c] = map[r - 1][c] + re * 1;
-			map[r - 1][c - 1] = map[r - 1][c - 1] + re * 7;
-			map[r - 1][c - 2] = map[r - 1][c - 2] + re * 10;
-			map[r - 2][c - 1] = map[r - 2][c - 1] + re * 2;
-			map[r + 1][c] = map[r + 1][c] + re * 1;
-			map[r + 1][c - 1] = map[r + 1][c - 1] + re * 7;
-			map[r + 1][c - 2] = map[r + 1][c - 2] + re * 10;
-			map[r + 2][c - 1] = map[r + 2][c - 1] + re * 2;
-			c--;//ÇÑ¹ø ÁøÇàÇßÀ¸´Ï c°¡ ÁÙ¾îµé°Í
+			map[r][c - 2] = map[r][c - 2] + a; //a ëŠ” 55%ê°€ ì•„ë‹ˆë‹¤.. ë‚¨ì€ ëª¨ëž˜ ì „ë¶€ ë‹¤ì´ë‹¤..!!!!!!
+			map[r][c - 3] = map[r][c - 3] + int(re * 5);
+			map[r - 1][c] = map[r - 1][c] + int(re * 1);
+			map[r - 1][c - 1] = map[r - 1][c - 1] + int(re * 7);
+			map[r - 1][c - 2] = map[r - 1][c - 2] + int(re * 10);
+			map[r - 2][c - 1] = map[r - 2][c - 1] + int(re * 2);
+			map[r + 1][c] = map[r + 1][c] + int(re * 1);
+			map[r + 1][c - 1] = map[r + 1][c - 1] + int(re * 7);
+			map[r + 1][c - 2] = map[r + 1][c - 2] + int(re * 10);
+			map[r + 2][c - 1] = map[r + 2][c - 1] + int(re * 2);
+			c--;//í•œë²ˆ ì§„í–‰í–ˆìœ¼ë‹ˆ cê°€ ì¤„ì–´ë“¤ê²ƒ
 		}
 		dir = 2;
 		move(dir, r, c);
 	}
 
-	else if ((dir == 2) && (r < N + 2)) { //ÇÏ·ÎÀÌµ¿
+	else if ((dir == 2) && (r < N + 2)) { //í•˜ë¡œì´ë™
 		for (int i = 0; i < cnt; i++) {
-			int y = map[r + 1][c]; //yÁöÁ¡Àº 0ÀÌµÇ°í ÀÌ ÁöÁ¡¿¡ÀÖ´Â
-			int re = y / 100;
+			int y = map[r + 1][c]; //yì§€ì ì€ 0ì´ë˜ê³  ì´ ì§€ì ì—ìžˆëŠ”
+			float re = y / 100.0;
+			int a = y - int(re * 5) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2);
+
 			map[r + 1][c] = 0;
-			map[r + 2][c] = map[r + 2][c] + re * 55;
+			map[r + 2][c] = map[r + 2][c] + a;
 			map[r + 3][c] = map[r + 3][c] + re * 5;
 			map[r][c - 1] = map[r][c - 1] + re * 1;
 			map[r + 1][c - 1] = map[r + 1][c - 1] + re * 7;
@@ -57,13 +60,15 @@ void move(int dir,int r,int c) {
 		dir = 3;
 		move(dir, r, c);
 	}
-	else if ((dir == 3) && (c < N+2)) { //¿ì·ÎÀÌµ¿
+	else if ((dir == 3) && (c < N+2)) { //ìš°ë¡œì´ë™
 		cnt++;
 		for (int i = 0; i < cnt; i++) {
 			int y = map[r][c + 1];
-			int re = y / 100;
+			float re = y / 100.0;
+			int a = y - int(re * 5) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2);
+
 			map[r][c + 1] = 0;
-			map[r][c + 2] = map[r][c + 2] + re * 55;
+			map[r][c + 2] = map[r][c + 2] + a;
 			map[r][c + 3] = map[r][c + 3] + re * 5;
 			map[r - 1][c] = map[r - 1][c] + re * 1;
 			map[r - 1][c + 1] = map[r - 1][c + 1] + re * 7;
@@ -73,17 +78,19 @@ void move(int dir,int r,int c) {
 			map[r + 1][c + 1] = map[r + 1][c + 1] + re * 7;
 			map[r + 1][c + 2] = map[r + 1][c + 2] + re * 10;
 			map[r + 2][c + 1] = map[r + 2][c + 1] + re * 2;
-			c++;//ÇÑ¹ø ÁøÇàÇßÀ¸´Ï c°¡ ÁÙ¾îµé°Í
+			c++;//í•œë²ˆ ì§„í–‰í–ˆìœ¼ë‹ˆ cê°€ ì¤„ì–´ë“¤ê²ƒ
 		}
 		dir = 4;
 		move(dir, r, c);
 	}
-	else if ((dir == 4) && (r > 2)) { //»óÀ¸·ÎÀÌµ¿
+	else if ((dir == 4) && (r > 2)) { //ìƒìœ¼ë¡œì´ë™
 		for (int i = 0; i < cnt; i++) {
-			int y = map[r - 1][c]; //yÁöÁ¡Àº 0ÀÌµÇ°í ÀÌ ÁöÁ¡¿¡ÀÖ´Â
-			int re = y / 100;
+			int y = map[r - 1][c]; //yì§€ì ì€ 0ì´ë˜ê³  ì´ ì§€ì ì—ìžˆëŠ”
+			float re = y / 100.0;
+			int a = y - int(re * 5) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2) - int(re * 1) - int(re * 7) - int(re * 10) - int(re * 2);
+
 			map[r - 1][c] = 0;
-			map[r - 2][c] = map[r - 2][c] + re * 55;
+			map[r - 2][c] = map[r - 2][c] +a;
 			map[r - 3][c] = map[r - 3][c] + re * 5;
 			map[r][c - 1] = map[r][c - 1] + re * 1;
 			map[r - 1][c - 1] = map[r - 1][c - 1] + re * 7;
@@ -123,9 +130,9 @@ int main() {
 		}
 	}
 
-	dir = 1; //½ÃÀÛ¹æÇâ 'ÁÂ'
+	dir = 1; //ì‹œìž‘ë°©í–¥ 'ì¢Œ'
 	r = ((N + 2) / 2) + 1;
-	c = ((N + 2) / 2) + 1; //Áß¾Ó Á¡
+	c = ((N + 2) / 2) + 1; //ì¤‘ì•™ ì 
 	move(dir, r, c);
 	int result = sum_move();
 	printf("%d", result);
