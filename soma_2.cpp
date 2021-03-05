@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 소마 피시방
 소마는 코더랜드에 새로운 피시방을 오픈했다.
 
@@ -49,9 +48,10 @@ PC번호는 1부터 시작하며 p 번 까지 있다.
 
 출력 예시
 1 0
-2 4000
+2 4
 */
 
+/*
 그리디는 아니다
 15시간인데 2 3 4 10 이면.. 작은순서대로 채워도 안되고
 큰 순서대로 채워도 안될것이기 때문. 2 3 10 채워야되는디..
@@ -87,11 +87,12 @@ DP[1~p][0]=1 //모든 컴퓨터마다 0시간을 쓰는건 가능
 DP[x] 배열에 변화가 생기겠지 ?
 DP[x][0...h] 모든 차원에 변화가능성이 있는곳에 1을 써주면 될것
 for j = h ~y 로 거꾸로 내려온다.
-/* DP[x][j]를 갱신하고싶다.
+
+
+DP[x][j]를 갱신하고싶다.
     if DP[x][j]==1: 무시
-    else : DP[x][j-y]==1 이면
-    (새로 들어온 사람이 없을때 x번 컴퓨터를 j-y시간 쓰는게 가능했던 상황, 그러면 DP[x][j]=1)
- */DP[x][j] |= DP[x][j - y]
+    else : DP[x][j-y]==1 이면 (새로 들어온 사람이 없을때 x번 컴퓨터를 j-y시간 쓰는게 가능했던 상황, 그러면 DP[x][j]=1)
+       DP[x][j] |= DP[x][j - y]
 
 
 
@@ -126,42 +127,45 @@ void pro() {
     }
     cout << ans;
 }
-
-
-/*
-2번 문제
-h시간 p대의 pc
-시간당 1000원
-사용희망시간이 많으면 받지않는다.
 */
-//vector로 투포인터
-//다수를 처리해야되는데 배열로는 엄두가 안난다.
 
-/*
+#include <iostream>
+
+using namespace std;
+    
 int p = 0; //피씨 대수
 int n = 0; //손님 명수
 int h = 0; //h시간만 운영할거다
-
-int arr[101][1001] = { 0, };
-int temp[1001] = { 0, };
+int dp[105][25]; //그냥 넉넉하게
 
 void solution() {
+    for (int i = 1; i <= p; i++) //dp의 초기값 지정
+        dp[i][0] = 1;
 
+    while (n--) { // n만큼 돌면서 dp 수행
+        int x, y; //입력받을거
+        cin >> x >> y;
+        for (int j = h; j >= y; j--) {
+            dp[x][j] |= dp[x][j - y];
+        }
+
+    }
+    int ans = 0;
+
+    for (int i = 1; i <= p; i++) {
+        for (int j = h; j >= 0; j--) {
+            if (dp[i][j]) {
+                ans += j;
+                cout << i << '\0' << j << endl;
+                break;
+            }
+        }
+    }
 }
 
 int main() {
     cin >> p >> n >> h;
-    for (int i = 0; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
-        arr[a][i] = b;
-    }
-    for (int i = 1; i <= p; i++) {
-
-        sort(arr[i], arr[i] + sizeof(arr[i]));
-    }
     solution();
     return 0;
 }
-*/
 
