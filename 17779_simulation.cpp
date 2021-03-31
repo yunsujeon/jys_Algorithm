@@ -30,7 +30,7 @@ int part(int r, int c, int d1, int d2) { //각 파트별 넓이가 얼마인지 
 	//5를 포함한 2를계산
 	//5를포함한 3을계산
 	//5를포함한 4를 계산
-	return 1;
+	return
 }
 
 
