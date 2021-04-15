@@ -1,3 +1,4 @@
+//string에 관한 문제라기보다 알고리즘 자체가 어려웠다. 생각해내기가
 #include <iostream>
 #include <string>
 using namespace std;
