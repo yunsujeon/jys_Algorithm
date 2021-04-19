@@ -4,23 +4,18 @@
 #include <string.h>
 using namespace std;
 
-int rsize=3, csize=3; //ÃÊ±â´Â 3
+int rsize=3, csize=3; //ì´ˆê¸°ëŠ” 3
 int r, c, k;
 int square[101][101] = { 0, };
 int cnt = 0;
 
-bool cmp(const pair<int, int>& a, const pair<int, int>& b) {
-	if (a.second == b.second) return a.first < b.first;
-	return a.second < b.second;
-}
-
 int solution() {
 	int copymap[101][101] = { 0, };
-	while (cnt<100) {
-		if (square[r-1][c-1] == k) return cnt; //R¿¬»êÀÎÁö C¿¬»êÀÎÁö¸¦ °áÁ¤ÇÏ´Â ºÎºĞ
-		if (rsize >= csize) {//R¿¬»êÀÌ¶ó¸é
+	while (cnt<=100) {
+		if (square[r-1][c-1] == k) return cnt; //Rì—°ì‚°ì¸ì§€ Cì—°ì‚°ì¸ì§€ë¥¼ ê²°ì •í•˜ëŠ” ë¶€ë¶„
+		if (rsize >= csize) {//Rì—°ì‚°ì´ë¼ë©´
 			int MAX = 0;
-			for (int i = 0; i < rsize; i++) { //Çà¸¶´Ù ½ÇÇà
+			for (int i = 0; i < rsize; i++) { //í–‰ë§ˆë‹¤ ì‹¤í–‰
 				vector <int> v1;
 				for (int j = 0; j < csize; j++) {
 					if (square[i][j] != 0) v1.push_back(square[i][j]);
@@ -30,18 +25,17 @@ int solution() {
 				int ct = 1;
 				for (int h = 0; h < v1.size(); h++) {
 					if (h==v1.size()-1){
-						v2.push_back({ ct, v1[h] }); //sort ½±°ÔÇÏ±âÀ§ÇØ ÀÏºÎ·¯ °Å²Ù·Î³Ö´Â´Ù.
+						v2.push_back({ ct, v1[h] }); //sort ì‰½ê²Œí•˜ê¸°ìœ„í•´ ì¼ë¶€ëŸ¬ ê±°ê¾¸ë¡œë„£ëŠ”ë‹¤.
 						ct = 1;
 					}
 					else if (v1[h] != v1[h + 1]) {
-						v2.push_back({ ct, v1[h] }); //sort ½±°ÔÇÏ±âÀ§ÇØ ÀÏºÎ·¯ °Å²Ù·Î³Ö´Â´Ù.
+						v2.push_back({ ct, v1[h] }); //sort ì‰½ê²Œí•˜ê¸°ìœ„í•´ ì¼ë¶€ëŸ¬ ê±°ê¾¸ë¡œë„£ëŠ”ë‹¤.
 						ct = 1;
 					}
 					else if (v1[h] == v1[h + 1]) {
 						ct++;
 						continue;
 					}
-
 				}
 				if (MAX <= v2.size()*2) MAX = v2.size()*2;
 				sort(v2.begin(), v2.end());
@@ -56,9 +50,9 @@ int solution() {
 			csize = MAX;
 		}
 
-		else {//C¿¬»êÀÌ¶ó¸é
+		else {//Cì—°ì‚°ì´ë¼ë©´
 			int MAX = 0;
-			for (int j = 0; j < csize; j++) { // ¿­¸¶´Ù ½ÇÇà
+			for (int j = 0; j < csize; j++) { // ì—´ë§ˆë‹¤ ì‹¤í–‰
 				vector <int> v1;
 				for (int i = 0; i < rsize; i++) {
 					if (square[i][j] != 0) v1.push_back(square[i][j]);
@@ -68,11 +62,11 @@ int solution() {
 				int ct = 1;
 				for (int h = 0; h < v1.size(); h++) {
 					if (h == v1.size() - 1) {
-						v2.push_back({ ct, v1[h] }); //sort ½±°ÔÇÏ±âÀ§ÇØ ÀÏºÎ·¯ °Å²Ù·Î³Ö´Â´Ù.
+						v2.push_back({ ct, v1[h] }); //sort ì‰½ê²Œí•˜ê¸°ìœ„í•´ ì¼ë¶€ëŸ¬ ê±°ê¾¸ë¡œë„£ëŠ”ë‹¤.
 						ct = 1;
 					}
 					else if (v1[h] != v1[h + 1]) {
-						v2.push_back({ ct, v1[h] }); //sort ½±°ÔÇÏ±âÀ§ÇØ ÀÏºÎ·¯ °Å²Ù·Î³Ö´Â´Ù.
+						v2.push_back({ ct, v1[h] }); //sort ì‰½ê²Œí•˜ê¸°ìœ„í•´ ì¼ë¶€ëŸ¬ ê±°ê¾¸ë¡œë„£ëŠ”ë‹¤.
 						ct = 1;
 					}
 					else if (v1[h] == v1[h + 1]) {
@@ -94,7 +88,8 @@ int solution() {
 		}
 
 		cnt += 1;
-		memcpy(square, copymap, sizeof(copymap)); //copymapÀ» map¿¡ º¹»çÇÑ´Ù.
+		memcpy(square, copymap, sizeof(copymap)); //copymapì„ mapì— ë³µì‚¬í•œë‹¤.
+		memset(copymap, 0, sizeof(copymap));
 	}
 	return -1;
 }
@@ -107,7 +102,7 @@ int main() {
 			cin >> in;
 			square[i][j] = in;
 		}
-	} //ÃÊ±â mapÀ» ¸¸µé¾îÁØ´Ù.
+	} //ì´ˆê¸° mapì„ ë§Œë“¤ì–´ì¤€ë‹¤.
 	cout << solution() << '\n';
 	return 0;
 }
